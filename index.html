@@ -215,7 +215,7 @@ body{
 /* ===== ROYAL SCROLL ===== */
 
 .scroll-container{
-display:flex;
+display:none;
 justify-content:center;
 align-items:center;
 padding:100px 20px;
@@ -224,7 +224,7 @@ padding:100px 20px;
 .scroll{
 position:relative;
 width:700px;
-background:#f5e6c8;
+background:linear-gradient(#f8e8c9,#edd4a4);
 border-left:6px solid #a6844f;
 border-right:6px solid #a6844f;
 box-shadow:0 0 40px rgba(0,0,0,0.4);
@@ -343,7 +343,9 @@ What’s something that always makes you genuinely happy?
 Have a beautiful day. 🌸
 
 — Someone who once forgot how to speak because of you. 🌸
+
     </div>
+</section>
 <section class="slider">
 
     <!-- Moving Photos -->
@@ -375,6 +377,9 @@ Have a beautiful day. 🌸
     <div class="slider-text">_</div>
 
 </section>
+<div style="text-align:center;margin:40px;">
+<button onclick="openRoyal()" class="reveal-btn">📜 Open Royal Message</button>
+</div>
 <section class="scroll-container">
 
 <div class="scroll">
@@ -430,20 +435,14 @@ function playMusic(){
     document.getElementById("bg-music").play();
 }
 /* Royal Scroll Writing */
+const royalMessage = `If anything I did or said felt uncomfortable to you, I’m truly sorry.
 
-const royalMessage = `Hi,
+Especially if adding your picture here bothered you in any way — please don’t feel bad about it. I only used it here, and it hasn’t been shared anywhere else.
 
-I know you don’t really know me — who I am or why I’m sending this message.
-
-But maybe destiny wanted it to reach you.
-
-Since that day I haven't been able to forget you.
-
-Have a beautiful day.
-
-— Someone who once forgot how to speak because of you.`
+I never meant to cause any discomfort or trouble for you. If it did, I sincerely apologize. Your comfort and peace matter more than anything, and I completely respect that.`
 
 let r = 0
+let opened = false;
 
 function writeRoyal(){
 
@@ -459,7 +458,20 @@ setTimeout(writeRoyal,40)
 
 }
 
-setTimeout(writeRoyal,4500)
+function openRoyal(){
+
+if(opened) return;
+
+opened = true;
+
+document.querySelector(".scroll-container").style.display="flex";
+document.querySelector(".scroll-container").scrollIntoView({behavior:"smooth"});
+
+document.getElementById("scrollText").innerHTML = "";
+
+writeRoyal();
+
+}
 
 </script>
 
