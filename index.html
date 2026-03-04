@@ -290,23 +290,25 @@ white-space:pre-line;
 }
 /* Flower burst effect */
 
-.flower{
+/* Color Leaf Blast */
+
+.blastLeaf{
 position:fixed;
-width:14px;
-height:14px;
-background:pink;
-border-radius:50%;
+width:16px;
+height:16px;
+border-radius:50% 0 50% 50%;
 pointer-events:none;
-animation:flowerFall 2s linear forwards;
+opacity:0.9;
+animation:leafBlast 2.5s linear forwards;
 }
 
-@keyframes flowerFall{
+@keyframes leafBlast{
 0%{
-transform:translate(0,0) scale(1);
+transform:translate(0,0) rotate(0deg) scale(1);
 opacity:1;
 }
 100%{
-transform:translate(var(--x),var(--y)) scale(0.5);
+transform:translate(var(--x),var(--y)) rotate(360deg) scale(0.6);
 opacity:0;
 }
 }
@@ -508,22 +510,26 @@ flowerBlast()
 }
 function flowerBlast(){
 
-for(let i=0;i<25;i++){
+const colors=["#2ecc71","#f1c40f","#e74c3c"]; // green yellow red
 
-const flower=document.createElement("div")
-flower.classList.add("flower")
+for(let i=0;i<30;i++){
 
-flower.style.left=window.innerWidth/2+"px"
-flower.style.top=window.innerHeight/2+"px"
+const leaf=document.createElement("div")
+leaf.classList.add("blastLeaf")
 
-flower.style.setProperty("--x",(Math.random()*400-200)+"px")
-flower.style.setProperty("--y",(Math.random()*400-200)+"px")
+leaf.style.background=colors[Math.floor(Math.random()*colors.length)]
 
-document.body.appendChild(flower)
+leaf.style.left=window.innerWidth/2+"px"
+leaf.style.top=window.innerHeight/2+"px"
+
+leaf.style.setProperty("--x",(Math.random()*500-250)+"px")
+leaf.style.setProperty("--y",(Math.random()*500-250)+"px")
+
+document.body.appendChild(leaf)
 
 setTimeout(()=>{
-flower.remove()
-},2000)
+leaf.remove()
+},2500)
 
 }
 
