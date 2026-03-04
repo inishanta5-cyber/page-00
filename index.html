@@ -212,7 +212,82 @@ body{
     cursor:pointer;
     border-radius:20px;
 }
+/* ===== ROYAL SCROLL ===== */
 
+.scroll-container{
+display:flex;
+justify-content:center;
+align-items:center;
+padding:100px 20px;
+}
+
+.scroll{
+position:relative;
+width:700px;
+background:#f5e6c8;
+border-left:6px solid #a6844f;
+border-right:6px solid #a6844f;
+box-shadow:0 0 40px rgba(0,0,0,0.4);
+overflow:hidden;
+height:0;
+animation:openScroll 4s forwards;
+}
+
+/* top roll */
+.scroll:before{
+content:"";
+position:absolute;
+top:-60px;
+left:0;
+width:100%;
+height:60px;
+background:#e8d2a6;
+border-radius:50px;
+}
+
+/* bottom roll */
+.scroll:after{
+content:"";
+position:absolute;
+bottom:-60px;
+left:0;
+width:100%;
+height:60px;
+background:#e8d2a6;
+border-radius:50px;
+}
+
+/* thread */
+
+.thread{
+position:absolute;
+width:4px;
+height:120px;
+background:linear-gradient(pink,white);
+animation:wind 2s infinite ease-in-out;
+}
+
+.thread.lt{top:-40px;left:-8px;}
+.thread.lb{bottom:-40px;left:-8px;}
+.thread.rt{top:-40px;right:-8px;}
+.thread.rb{bottom:-40px;right:-8px;}
+
+@keyframes wind{
+0%{transform:rotate(-6deg);}
+50%{transform:rotate(6deg);}
+100%{transform:rotate(-6deg);}
+}
+
+@keyframes openScroll{
+0%{height:0;}
+100%{height:520px;}
+}
+
+.scroll-text{
+padding:40px;
+line-height:1.8;
+white-space:pre-line;
+}
 </style>
 </head>
 
@@ -300,6 +375,20 @@ Have a beautiful day. 🌸
     <div class="slider-text">_</div>
 
 </section>
+<section class="scroll-container">
+
+<div class="scroll">
+
+<div class="thread lt"></div>
+<div class="thread lb"></div>
+<div class="thread rt"></div>
+<div class="thread rb"></div>
+
+<div class="scroll-text" id="scrollText"></div>
+
+</div>
+
+</section>
 
 <script>
 /* Create Falling Leaves */
@@ -340,6 +429,37 @@ function revealMessage(){
 function playMusic(){
     document.getElementById("bg-music").play();
 }
+/* Royal Scroll Writing */
+
+const royalMessage = `Hi,
+
+I know you don’t really know me — who I am or why I’m sending this message.
+
+But maybe destiny wanted it to reach you.
+
+Since that day I haven't been able to forget you.
+
+Have a beautiful day.
+
+— Someone who once forgot how to speak because of you.`
+
+let r = 0
+
+function writeRoyal(){
+
+if(r < royalMessage.length){
+
+document.getElementById("scrollText").innerHTML += royalMessage.charAt(r)
+
+r++
+
+setTimeout(writeRoyal,40)
+
+}
+
+}
+
+setTimeout(writeRoyal,4500)
 
 </script>
 
