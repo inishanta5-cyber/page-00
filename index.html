@@ -8,6 +8,50 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
+/* ===== MINI MUSIC PLAYER ===== */
+
+.music-player{
+position:fixed;
+bottom:20px;
+right:20px;
+width:220px;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(10px);
+border-radius:15px;
+padding:10px;
+font-size:14px;
+color:#4a2c40;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+z-index:999;
+cursor:pointer;
+transition:0.3s;
+}
+
+.player-header{
+font-weight:bold;
+text-align:center;
+opacity:0.8;
+}
+
+.player-controls{
+display:none;
+justify-content:space-around;
+margin-top:10px;
+}
+
+.player-controls button{
+background:white;
+border:none;
+border-radius:50%;
+width:35px;
+height:35px;
+cursor:pointer;
+font-size:16px;
+}
+
+.music-player.active .player-controls{
+display:flex;
+}
 /* ===== SPRING LEAVES ANIMATION ===== */
 
 .leaf {
@@ -330,12 +374,6 @@ box-shadow:0 10px 30px rgba(0,0,0,0.15);
 <body>
 
 <!-- Background Music -->
-<audio id="bg-music" loop>
-    <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<button class="music-btn" onclick="playMusic()">🎵 Play Music</button>
-
 <section class="header">
     <div class="watermark">N</div>
 
@@ -434,6 +472,72 @@ Have a beautiful day. 🌸
 </section>
 
 <script>
+    /* ===== MUSIC PLAYER SYSTEM ===== */
+
+const songs = [
+    {name:"Song 1", file:"M1.mp3"},
+    {name:"Song 2", file:"M2.mp3"},
+    {name:"Song 3", file:"M3.mp3"},
+    {name:"Song 4", file:"M4.mp3"}
+];
+
+let songIndex = 0;
+
+const audio = document.getElementById("audioPlayer");
+const title = document.getElementById("songTitle");
+const playBtn = document.getElementById("playBtn");
+const player = document.getElementById("musicPlayer");
+
+function loadSong(index){
+    audio.src = songs[index].file;
+    title.innerText = songs[index].name;
+}
+
+loadSong(songIndex);
+
+function playPause(){
+
+    if(audio.paused){
+        audio.play();
+        playBtn.innerText="⏸";
+    }else{
+        audio.pause();
+        playBtn.innerText="▶";
+    }
+
+}
+
+function nextSong(){
+
+    songIndex++;
+
+    if(songIndex >= songs.length){
+        songIndex = 0;
+    }
+
+    loadSong(songIndex);
+    audio.play();
+    playBtn.innerText="⏸";
+
+}
+
+function prevSong(){
+
+    songIndex--;
+
+    if(songIndex < 0){
+        songIndex = songs.length-1;
+    }
+
+    loadSong(songIndex);
+    audio.play();
+    playBtn.innerText="⏸";
+
+}
+
+function togglePlayer(){
+    player.classList.toggle("active");
+}
 /* Create Falling Leaves */
 function createLeaf(){
     const leaf = document.createElement("div");
@@ -468,10 +572,6 @@ function revealMessage(){
     document.getElementById("message").style.display = "block";
 }
 
-/* Play Music */
-function playMusic(){
-    document.getElementById("bg-music").play();
-}
 /* Royal Scroll Writing */
 const royalMessage = `If anything I did or said felt uncomfortable to you, I’m truly sorry.
 
@@ -549,6 +649,22 @@ leaf.remove()
 
 }
 </script>
+<!-- ===== MUSIC PLAYER ===== -->
 
+<div class="music-player" id="musicPlayer" onclick="togglePlayer()">
+
+    <div class="player-header">
+        🎵 <span id="songTitle">M1.mp3</span>
+    </div>
+
+    <div class="player-controls">
+        <button onclick="prevSong()">⏮</button>
+        <button onclick="playPause()" id="playBtn">▶</button>
+        <button onclick="nextSong()">⏭</button>
+    </div>
+
+</div>
+
+<audio id="audioPlayer"></audio>
 </body>
 </html>
